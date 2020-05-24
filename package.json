@@ -1,6 +1,6 @@
 {
   "name": "fast-2d-poisson-disk-sampling",
-  "version": "2.2.1",
+  "version": "1.0.0",
   "description": "Fast 2D Poisson Disk Sampling based on a modified Bridson algorithm",
   "main": "src/fast-poisson-disk-sampling.js",
   "scripts": {
@@ -20,9 +20,10 @@
   },
   "keywords": [
     "poisson",
+    "disc",
+    "sampling",
     "noise",
-    "blue noise",
-    "sampling"
+    "blue noise"
   ],
   "author": "Kevin Chapelier",
   "license": "MIT",

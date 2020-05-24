@@ -1,6 +1,6 @@
 # fast-2d-poisson-disk-sampling
 
-//TODO badges
+[![Build Status](https://travis-ci.org/kchapelier/fast-2d-poisson-disk-sampling.svg)](https://travis-ci.org/kchapelier/fast-2d-poisson-disk-sampling) [![NPM version](https://badge.fury.io/js/fast-2d-poisson-disk-sampling.svg)](http://badge.fury.io/js/fast-2d-poisson-disk-sampling)
 
 2D Poisson Disk Sampling based on a modified Bridson algorithm.
 
