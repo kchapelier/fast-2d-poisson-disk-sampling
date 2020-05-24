@@ -3,6 +3,7 @@
 var tinyNDArray = require('./tiny-ndarray');
 
 var epsilon = 2e-14;
+var piDiv3 = Math.PI / 3;
 
 var neighbourhood = [
     [ 0, 0 ],   [ 0, -1 ],  [ -1, 0 ],
@@ -29,7 +30,7 @@ function FastPoissonDiskSampling (options, rng) {
     this.width = options.shape[0];
     this.height = options.shape[1];
     this.radius = options.radius || options.minDistance;
-    this.maxTries = Math.max(1, Math.ceil(options.tries || 30));
+    this.maxTries = Math.max(3, Math.ceil(options.tries || 30));
 
     this.rng = rng || Math.random;
 
@@ -38,7 +39,7 @@ function FastPoissonDiskSampling (options, rng) {
     this.cellSize = this.radius * Math.SQRT1_2;
 
     this.angleIncrement = Math.PI * 2 / this.maxTries;
-    this.angleIncrementOnSuccess = 1 + epsilon;
+    this.angleIncrementOnSuccess = piDiv3 + epsilon;
     this.triesIncrementOnSuccess = Math.ceil(this.angleIncrementOnSuccess / this.angleIncrement);
 
     this.processList = [];
@@ -179,7 +180,7 @@ FastPoissonDiskSampling.prototype.next = function () {
         tries = currentPoint[3];
 
         if (tries === 0) {
-            currentAngle = currentAngle + (this.rng() - 0.5);
+            currentAngle = currentAngle + (this.rng() - 0.5) * piDiv3 * 4;
         }
 
         for (; tries < this.maxTries; tries++) {
