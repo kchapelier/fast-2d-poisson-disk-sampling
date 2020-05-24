@@ -18,8 +18,6 @@ for (i = 0; i < 10; i++) {
     s+= p.fill().length;
 }
 
-console.log();
-
 function benchmark (size, radius, tries, testIterations) {
     var time = process.hrtime();
     var s = 0;
@@ -39,6 +37,11 @@ function benchmark (size, radius, tries, testIterations) {
     console.log('[' + size + 'x' + size + ' radius ' + radius + ' tries ' + tries + ']: ' + (toMs(time) / testIterations).toFixed(3) + 'ms for ~' + (s/testIterations|0)+' points');
 }
 
+console.log();
+
+console.log('Fast 2D Poisson Disc Sampling benchmark');
+
+console.log();
 
 benchmark(800, 8, 15, 10);
 benchmark(800, 8, 30, 10);

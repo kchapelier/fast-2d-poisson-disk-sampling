@@ -29,7 +29,7 @@ A compiled version for web browsers is also available on a CDN:
 - Can be used with a custom RNG function.
 - Allow the configuration of the max number of tries.
 - Same general API as [poisson-disk-sampling](https://github.com/kchapelier/poisson-disk-sampling).
-- Speed.
+- Speed, see [benchmark results](https://github.com/kchapelier/fast-2d-poisson-disk-sampling/blob/master/BENCHMARK.md).
 
 ## Basic example
 

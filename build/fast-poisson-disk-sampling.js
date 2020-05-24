@@ -55,30 +55,30 @@ function FastPoissonDiskSampling (options, rng) {
     this.grid = tinyNDArray(this.gridShape); //will store references to samplePoints
 }
 
-FixedDensityPDS.prototype.width = null;
-FixedDensityPDS.prototype.height = null;
-FixedDensityPDS.prototype.radius = null;
-FixedDensityPDS.prototype.radiusPlusEpsilon = null;
-FixedDensityPDS.prototype.squaredRadius = null;
-FixedDensityPDS.prototype.cellSize = null;
+FastPoissonDiskSampling.prototype.width = null;
+FastPoissonDiskSampling.prototype.height = null;
+FastPoissonDiskSampling.prototype.radius = null;
+FastPoissonDiskSampling.prototype.radiusPlusEpsilon = null;
+FastPoissonDiskSampling.prototype.squaredRadius = null;
+FastPoissonDiskSampling.prototype.cellSize = null;
 
-FixedDensityPDS.prototype.angleIncrement = null;
-FixedDensityPDS.prototype.angleIncrementOnSuccess = null;
-FixedDensityPDS.prototype.triesIncrementOnSuccess = null;
+FastPoissonDiskSampling.prototype.angleIncrement = null;
+FastPoissonDiskSampling.prototype.angleIncrementOnSuccess = null;
+FastPoissonDiskSampling.prototype.triesIncrementOnSuccess = null;
 
-FixedDensityPDS.prototype.maxTries = null;
-FixedDensityPDS.prototype.rng = null;
+FastPoissonDiskSampling.prototype.maxTries = null;
+FastPoissonDiskSampling.prototype.rng = null;
 
-FixedDensityPDS.prototype.processList = null;
-FixedDensityPDS.prototype.samplePoints = null;
-FixedDensityPDS.prototype.gridShape = null;
-FixedDensityPDS.prototype.grid = null;
+FastPoissonDiskSampling.prototype.processList = null;
+FastPoissonDiskSampling.prototype.samplePoints = null;
+FastPoissonDiskSampling.prototype.gridShape = null;
+FastPoissonDiskSampling.prototype.grid = null;
 
 /**
  * Add a totally random point in the grid
  * @returns {Array} The point added to the grid
  */
-FixedDensityPDS.prototype.addRandomPoint = function () {
+FastPoissonDiskSampling.prototype.addRandomPoint = function () {
     return this.directAddPoint([
         this.rng() * this.width,
         this.rng() * this.height,
@@ -92,7 +92,7 @@ FixedDensityPDS.prototype.addRandomPoint = function () {
  * @param {Array} point Point
  * @returns {Array|null} The point added to the grid, null if the point is out of the bound or not of the correct dimension
  */
-FixedDensityPDS.prototype.addPoint = function (point) {
+FastPoissonDiskSampling.prototype.addPoint = function (point) {
     var valid = point.length === 2 && point[0] >= 0 && point[0] < this.width && point[1] >= 0 && point[1] < this.height;
 
     return valid ? this.directAddPoint([
@@ -109,7 +109,7 @@ FixedDensityPDS.prototype.addPoint = function (point) {
  * @returns {Array} The point added to the grid
  * @protected
  */
-FixedDensityPDS.prototype.directAddPoint = function (point) {
+FastPoissonDiskSampling.prototype.directAddPoint = function (point) {
     var coordsOnly = [point[0], point[1]];
     this.processList.push(point);
     this.samplePoints.push(coordsOnly);
@@ -127,7 +127,7 @@ FixedDensityPDS.prototype.directAddPoint = function (point) {
  * @returns {boolean} Whether the point is in the neighbourhood of another point
  * @protected
  */
-FixedDensityPDS.prototype.inNeighbourhood = function (point) {
+FastPoissonDiskSampling.prototype.inNeighbourhood = function (point) {
     var dimensionNumber = 2,
         stride = this.grid.stride,
         neighbourIndex,
@@ -166,12 +166,11 @@ FixedDensityPDS.prototype.inNeighbourhood = function (point) {
  * Try to generate a new point in the grid, returns null if it wasn't possible
  * @returns {Array|null} The added point or null
  */
-FixedDensityPDS.prototype.next = function () {
+FastPoissonDiskSampling.prototype.next = function () {
     var tries,
         currentPoint,
         currentAngle,
-        newPoint,
-        i;
+        newPoint;
 
     while (this.processList.length > 0) {
         var index = this.processList.length * this.rng() | 0;
@@ -221,7 +220,7 @@ FixedDensityPDS.prototype.next = function () {
  * Will block the thread, probably best to use it in a web worker or child process.
  * @returns {Array[]} Sample points
  */
-FixedDensityPDS.prototype.fill = function () {
+FastPoissonDiskSampling.prototype.fill = function () {
     if (this.samplePoints.length === 0) {
         this.addRandomPoint();
     }
@@ -235,24 +234,16 @@ FixedDensityPDS.prototype.fill = function () {
  * Get all the points in the grid.
  * @returns {Array[]} Sample points
  */
-FixedDensityPDS.prototype.getAllPoints = function () {
+FastPoissonDiskSampling.prototype.getAllPoints = function () {
     return this.samplePoints;
-};
-
-/**
- * Get all the points in the grid along with the result of the distance function.
- * @throws Will always throw an error.
- */
-FixedDensityPDS.prototype.getAllPointsWithDistance = function () {
-    throw new Error('PoissonDiskSampling: getAllPointsWithDistance() is not available in fixed-density implementation');
 };
 
 /**
  * Reinitialize the grid as well as the internal state
  */
-FixedDensityPDS.prototype.reset = function () {
+FastPoissonDiskSampling.prototype.reset = function () {
     var gridData = this.grid.data,
-        i = 0;
+        i;
 
     // reset the cache grid
     for (i = 0; i < gridData.length; i++) {
@@ -266,7 +257,7 @@ FixedDensityPDS.prototype.reset = function () {
     this.processList.length = 0;
 };
 
-module.exports = FixedDensityPDS;
+module.exports = FastPoissonDiskSampling;
 
 },{"./tiny-ndarray":2}],2:[function(require,module,exports){
 "use strict";
