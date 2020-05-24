@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/kchapelier/fast-2d-poisson-disk-sampling.svg)](https://travis-ci.org/kchapelier/fast-2d-poisson-disk-sampling) [![NPM version](https://badge.fury.io/js/fast-2d-poisson-disk-sampling.svg)](http://badge.fury.io/js/fast-2d-poisson-disk-sampling)
 
-2D Poisson Disk Sampling based on a modified Bridson algorithm.
+Fast 2D Poisson Disk Sampling based on a modified Bridson algorithm.
 
 ## Installing
 
@@ -35,7 +35,7 @@ A compiled version for web browsers is also available on a CDN:
 
 ```js
 var p = new FastPoissonDiskSampling({
-    shape: [500, 300],
+    shape: [500, 200],
     radius: 6,
     tries: 20
 });
