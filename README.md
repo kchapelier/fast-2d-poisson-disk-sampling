@@ -6,7 +6,23 @@
 
 ## Installing
 
-//TODO
+With [npm](https://www.npmjs.com/) do:
+
+```
+npm install fast-2d-poisson-disk-sampling
+```
+
+With [yarn](https://yarnpkg.com/) do:
+
+```
+yarn add fast-2d-poisson-disk-sampling
+```
+
+A compiled version for web browsers is also available on a CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/kchapelier/fast-2d-poisson-disk-sampling@1.0.0/build/fast-poisson-disk-sampling.min.js"></script>
+```
 
 ## Features
 
@@ -18,9 +34,9 @@
 ## Basic example
 
 ```js
-var p = new PoissonDiskSampling({
-    shape: [600, 300],
-    radius: 20,
+var p = new FastPoissonDiskSampling({
+    shape: [500, 300],
+    radius: 6,
     tries: 20
 });
 var points = p.fill();
@@ -30,13 +46,13 @@ console.log(points); // array of sample points, themselves represented as simple
 
 ### Result as an image
 
-//TODO
+<img src="https://github.com/kchapelier/fast-2d-poisson-disk-sampling/raw/master/img/example1.png" style="image-rendering:pixelated; width:500px;"></img>
 
 ## Public API
 
 ### Constructor
 
-**new PoissonDiskSampling(options[, rng])**
+**new FastPoissonDiskSampling(options[, rng])**
 
 - *options :*
   - *shape :* Size/dimensions of the grid to generate points in, required.
@@ -44,8 +60,10 @@ console.log(points); // array of sample points, themselves represented as simple
   - *tries :* Maximum number of tries per point, defaults to 30.
 - *rng :* A function to use as random number generator, defaults to Math.random.
 
+Note: "minDistance" can be used instead of "radius", ensuring API compatibility with [poisson-disk-sampling](https://github.com/kchapelier/poisson-disk-sampling).
+
 ```js
-var pds = new PoissonDiskSampling({
+var pds = new FastPoissonDiskSampling({
     shape: [50, 50],
     radius: 4,
     tries: 10
@@ -120,17 +138,15 @@ Reinitialize the grid as well as the internal state.
 
 When doing multiple samplings in the same grid, it is preferable to reuse the same instance of PoissonDiskSampling instead of creating a new one for each sampling.
 
-## Implementation notes
-
-//TODO
-
 ## History
 
-//TODO
+### [1.0.0](https://github.com/kchapelier/fast-2d-poisson-disk-sampling/tree/1.0.0) (2020-05-24) :
+
+- First release
 
 ## Roadmap
 
-//TODO
+Write a proper description of the algorithm.
 
 ## How to contribute ?
 

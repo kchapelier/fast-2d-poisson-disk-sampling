@@ -1,0 +1,42 @@
+{
+  "name": "fast-2d-poisson-disk-sampling",
+  "version": "2.2.1",
+  "description": "Fast 2D Poisson Disk Sampling based on a modified Bridson algorithm",
+  "main": "src/fast-poisson-disk-sampling.js",
+  "scripts": {
+    "build": "browserify src/fast-poisson-disk-sampling.js --s FastPoissonDiskSampling > build/fast-poisson-disk-sampling.js",
+    "build-min": "browserify src/fast-poisson-disk-sampling.js --s FastPoissonDiskSampling | terser --ecma 5 > build/fast-poisson-disk-sampling.min.js",
+    "test": "mocha test/",
+    "eyeball": "node eyeball.js > test.png && open test.png",
+    "benchmark": "node benchmark.js"
+  },
+  "files": [
+    "src/fast-poisson-disk-sampling.js",
+    "src/tiny-ndarray.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kchapelier/fast-2d-poisson-disk-sampling.git"
+  },
+  "keywords": [
+    "poisson",
+    "noise",
+    "blue noise",
+    "sampling"
+  ],
+  "author": "Kevin Chapelier",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/kchapelier/fast-2d-poisson-disk-sampling/issues"
+  },
+  "homepage": "https://github.com/kchapelier/fast-2d-poisson-disk-sampling",
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^16.5.1",
+    "chai": "~4.2.0",
+    "mocha": "~7.1.2",
+    "pngjs-nozlib": "~1.0.0",
+    "terser": "^4.6.13"
+  }
+}
