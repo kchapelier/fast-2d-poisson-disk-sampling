@@ -21,14 +21,14 @@ yarn add fast-2d-poisson-disk-sampling
 A compiled version for web browsers is also available on a CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/kchapelier/fast-2d-poisson-disk-sampling@1.0.1/build/fast-poisson-disk-sampling.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/kchapelier/fast-2d-poisson-disk-sampling@1.0.2/build/fast-poisson-disk-sampling.min.js"></script>
 ```
 
 ## Features
 
 - Can be used with a custom RNG function.
 - Allow the configuration of the max number of tries.
-- Same general API as [poisson-disk-sampling](https://github.com/kchapelier/poisson-disk-sampling).
+- Same general API as [poisson-disk-sampling](https://github.com/kchapelier/poisson-disk-sampling) and [jittered-hexagonal-grid-sampling](https://github.com/kchapelier/jittered-hexagonal-grid-sampling).
 - Speed, see [benchmark results](https://github.com/kchapelier/fast-2d-poisson-disk-sampling/blob/master/BENCHMARK.md).
 
 ## Basic example
@@ -61,6 +61,8 @@ console.log(points); // array of sample points, themselves represented as simple
 - *rng :* A function to use as random number generator, defaults to Math.random.
 
 Note: "minDistance" can be used instead of "radius", ensuring API compatibility with [poisson-disk-sampling](https://github.com/kchapelier/poisson-disk-sampling).
+
+The following code will allow the generation of points where both coordinates will range from *0 up to 50* (including 0, but not including 50, **0 <= c < 50**).
 
 ```js
 var pds = new FastPoissonDiskSampling({
@@ -140,9 +142,13 @@ When doing multiple samplings in the same grid, it is preferable to reuse the sa
 
 ## History
 
+### [1.0.2](https://github.com/kchapelier/fast-2d-poisson-disk-sampling/tree/1.0.2) (2022-05-21) :
+
+- Update dev dependencies, add a test to the test suite
+
 ### [1.0.1](https://github.com/kchapelier/fast-2d-poisson-disk-sampling/tree/1.0.1) (2020-05-24) :
 
-- Tweaks to improve the result (higher point density).
+- Tweaks to improve the result (higher point density)
 
 ### [1.0.0](https://github.com/kchapelier/fast-2d-poisson-disk-sampling/tree/1.0.0) (2020-05-24) :
 

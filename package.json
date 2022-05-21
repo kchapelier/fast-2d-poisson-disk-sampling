@@ -1,6 +1,6 @@
 {
   "name": "fast-2d-poisson-disk-sampling",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Fast 2D Poisson Disk Sampling based on a modified Bridson algorithm",
   "main": "src/fast-poisson-disk-sampling.js",
   "scripts": {
@@ -34,10 +34,10 @@
   "homepage": "https://github.com/kchapelier/fast-2d-poisson-disk-sampling",
   "dependencies": {},
   "devDependencies": {
-    "browserify": "^16.5.1",
-    "chai": "~4.2.0",
-    "mocha": "~7.1.2",
+    "browserify": "^17.0.0",
+    "chai": "~4.3.6",
+    "mocha": "~10.0.0",
     "pngjs-nozlib": "~1.0.0",
-    "terser": "^4.6.13"
+    "terser": "^5.13.1"
   }
 }
