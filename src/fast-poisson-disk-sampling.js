@@ -131,27 +131,26 @@ FastPoissonDiskSampling.prototype.directAddPoint = function (point) {
  * @protected
  */
 FastPoissonDiskSampling.prototype.inNeighbourhood = function (point) {
-    var dimensionNumber = 2,
-        stride = this.grid.stride,
+    var strideX = this.grid.stride[0],
+        boundX = this.gridShape[0],
+        boundY = this.gridShape[1],
+        cellX = point[0] / this.cellSize | 0,
+        cellY = point[1] / this.cellSize | 0,
         neighbourIndex,
         internalArrayIndex,
-        dimension,
-        currentDimensionValue,
+        currentDimensionX,
+        currentDimensionY,
         existingPoint;
 
     for (neighbourIndex = 0; neighbourIndex < neighbourhoodLength; neighbourIndex++) {
-        internalArrayIndex = 0;
+        currentDimensionX = cellX + neighbourhood[neighbourIndex][0];
+        currentDimensionY = cellY + neighbourhood[neighbourIndex][1];
 
-        for (dimension = 0; dimension < dimensionNumber; dimension++) {
-            currentDimensionValue = ((point[dimension] / this.cellSize) | 0) + neighbourhood[neighbourIndex][dimension];
-
-            if (currentDimensionValue < 0 || currentDimensionValue >= this.gridShape[dimension]) {
-                internalArrayIndex = -1;
-                break;
-            }
-
-            internalArrayIndex += currentDimensionValue * stride[dimension];
-        }
+        internalArrayIndex = (
+            currentDimensionX < 0 || currentDimensionY < 0 || currentDimensionX >= boundX || currentDimensionY >= boundY ?
+            -1 :
+            currentDimensionX * strideX + currentDimensionY // stride for Y is always 1
+        );
 
         if (internalArrayIndex !== -1 && this.grid.data[internalArrayIndex] !== 0) {
             existingPoint = this.samplePoints[this.grid.data[internalArrayIndex] - 1];
