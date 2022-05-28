@@ -3,7 +3,6 @@
 
 var tinyNDArray = require('./tiny-ndarray');
 
-var epsilon = 2e-14;
 var piDiv3 = Math.PI / 3;
 
 var neighbourhood = [
@@ -35,12 +34,16 @@ function FastPoissonDiskSampling (options, rng) {
 
     this.rng = rng || Math.random;
 
+    const floatPrecisionMitigation = Math.max(1, Math.max(this.width, this.height) / 64 | 0);
+    const epsilonRadius = 1e-14 * floatPrecisionMitigation;
+    const epsilonAngle = 2e-14;
+
     this.squaredRadius = this.radius * this.radius;
-    this.radiusPlusEpsilon = this.radius + epsilon;
+    this.radiusPlusEpsilon = this.radius + epsilonRadius;
     this.cellSize = this.radius * Math.SQRT1_2;
 
     this.angleIncrement = Math.PI * 2 / this.maxTries;
-    this.angleIncrementOnSuccess = piDiv3 + epsilon;
+    this.angleIncrementOnSuccess = piDiv3 + epsilonAngle;
     this.triesIncrementOnSuccess = Math.ceil(this.angleIncrementOnSuccess / this.angleIncrement);
 
     this.processList = [];
@@ -115,7 +118,7 @@ FastPoissonDiskSampling.prototype.directAddPoint = function (point) {
     this.processList.push(point);
     this.samplePoints.push(coordsOnly);
 
-    var internalArrayIndex = ((point[0] / this.cellSize) | 0) * this.grid.stride[0] + ((point[1] / this.cellSize) | 0);
+    var internalArrayIndex = ((point[0] / this.cellSize) | 0) * this.grid.strideX + ((point[1] / this.cellSize) | 0);
 
     this.grid.data[internalArrayIndex] = this.samplePoints.length; // store the point reference
 
@@ -129,27 +132,26 @@ FastPoissonDiskSampling.prototype.directAddPoint = function (point) {
  * @protected
  */
 FastPoissonDiskSampling.prototype.inNeighbourhood = function (point) {
-    var dimensionNumber = 2,
-        stride = this.grid.stride,
+    var strideX = this.grid.strideX,
+        boundX = this.gridShape[0],
+        boundY = this.gridShape[1],
+        cellX = point[0] / this.cellSize | 0,
+        cellY = point[1] / this.cellSize | 0,
         neighbourIndex,
         internalArrayIndex,
-        dimension,
-        currentDimensionValue,
+        currentDimensionX,
+        currentDimensionY,
         existingPoint;
 
     for (neighbourIndex = 0; neighbourIndex < neighbourhoodLength; neighbourIndex++) {
-        internalArrayIndex = 0;
+        currentDimensionX = cellX + neighbourhood[neighbourIndex][0];
+        currentDimensionY = cellY + neighbourhood[neighbourIndex][1];
 
-        for (dimension = 0; dimension < dimensionNumber; dimension++) {
-            currentDimensionValue = ((point[dimension] / this.cellSize) | 0) + neighbourhood[neighbourIndex][dimension];
-
-            if (currentDimensionValue < 0 || currentDimensionValue >= this.gridShape[dimension]) {
-                internalArrayIndex = -1;
-                break;
-            }
-
-            internalArrayIndex += currentDimensionValue * stride[dimension];
-        }
+        internalArrayIndex = (
+            currentDimensionX < 0 || currentDimensionY < 0 || currentDimensionX >= boundX || currentDimensionY >= boundY ?
+            -1 :
+            currentDimensionX * strideX + currentDimensionY
+        );
 
         if (internalArrayIndex !== -1 && this.grid.data[internalArrayIndex] !== 0) {
             existingPoint = this.samplePoints[this.grid.data[internalArrayIndex] - 1];
@@ -264,19 +266,9 @@ module.exports = FastPoissonDiskSampling;
 "use strict";
 
 function tinyNDArrayOfInteger (gridShape) {
-    var dimensions = gridShape.length,
-        totalLength = 1,
-        stride = new Array(dimensions),
-        dimension;
-
-    for (dimension = dimensions; dimension > 0; dimension--) {
-        stride[dimension - 1] = totalLength;
-        totalLength = totalLength * gridShape[dimension - 1];
-    }
-
     return {
-        stride: stride,
-        data: new Uint32Array(totalLength)
+        strideX: gridShape[1],
+        data: new Uint32Array(gridShape[0] * gridShape[1])
     };
 }
 

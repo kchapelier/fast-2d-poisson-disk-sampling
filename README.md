@@ -21,7 +21,7 @@ yarn add fast-2d-poisson-disk-sampling
 A compiled version for web browsers is also available on a CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/kchapelier/fast-2d-poisson-disk-sampling@1.0.2/build/fast-poisson-disk-sampling.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/kchapelier/fast-2d-poisson-disk-sampling@1.0.3/build/fast-poisson-disk-sampling.min.js"></script>
 ```
 
 ## Features
@@ -141,6 +141,11 @@ Reinitialize the grid as well as the internal state.
 When doing multiple samplings in the same grid, it is preferable to reuse the same instance of PoissonDiskSampling instead of creating a new one for each sampling.
 
 ## History
+
+### [1.0.3](https://github.com/kchapelier/fast-2d-poisson-disk-sampling/tree/1.0.3) (2022-05-28) :
+
+- Fix potential floating point issue when working with shape's bounds > 512
+- Performance tweaks (~10% faster)
 
 ### [1.0.2](https://github.com/kchapelier/fast-2d-poisson-disk-sampling/tree/1.0.2) (2022-05-21) :
 
