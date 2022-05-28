@@ -2,7 +2,6 @@
 
 var tinyNDArray = require('./tiny-ndarray');
 
-var epsilon = 2e-14;
 var piDiv3 = Math.PI / 3;
 
 var neighbourhood = [
@@ -34,12 +33,15 @@ function FastPoissonDiskSampling (options, rng) {
 
     this.rng = rng || Math.random;
 
+    const epsilonRadius = 1e-14 * Math.max(1, Math.log2(Math.max(this.width, this.height)) - 5) | 0;
+    const epsilonAngle = 1e-14;
+
     this.squaredRadius = this.radius * this.radius;
-    this.radiusPlusEpsilon = this.radius + epsilon;
+    this.radiusPlusEpsilon = this.radius + epsilonRadius;
     this.cellSize = this.radius * Math.SQRT1_2;
 
     this.angleIncrement = Math.PI * 2 / this.maxTries;
-    this.angleIncrementOnSuccess = piDiv3 + epsilon;
+    this.angleIncrementOnSuccess = piDiv3 + epsilonAngle;
     this.triesIncrementOnSuccess = Math.ceil(this.angleIncrementOnSuccess / this.angleIncrement);
 
     this.processList = [];
