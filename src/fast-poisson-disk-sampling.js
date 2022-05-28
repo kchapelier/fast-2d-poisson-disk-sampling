@@ -117,7 +117,7 @@ FastPoissonDiskSampling.prototype.directAddPoint = function (point) {
     this.processList.push(point);
     this.samplePoints.push(coordsOnly);
 
-    var internalArrayIndex = ((point[0] / this.cellSize) | 0) * this.grid.stride[0] + ((point[1] / this.cellSize) | 0);
+    var internalArrayIndex = ((point[0] / this.cellSize) | 0) * this.grid.strideX + ((point[1] / this.cellSize) | 0);
 
     this.grid.data[internalArrayIndex] = this.samplePoints.length; // store the point reference
 
@@ -131,7 +131,7 @@ FastPoissonDiskSampling.prototype.directAddPoint = function (point) {
  * @protected
  */
 FastPoissonDiskSampling.prototype.inNeighbourhood = function (point) {
-    var strideX = this.grid.stride[0],
+    var strideX = this.grid.strideX,
         boundX = this.gridShape[0],
         boundY = this.gridShape[1],
         cellX = point[0] / this.cellSize | 0,
@@ -149,7 +149,7 @@ FastPoissonDiskSampling.prototype.inNeighbourhood = function (point) {
         internalArrayIndex = (
             currentDimensionX < 0 || currentDimensionY < 0 || currentDimensionX >= boundX || currentDimensionY >= boundY ?
             -1 :
-            currentDimensionX * strideX + currentDimensionY // stride for Y is always 1
+            currentDimensionX * strideX + currentDimensionY
         );
 
         if (internalArrayIndex !== -1 && this.grid.data[internalArrayIndex] !== 0) {
