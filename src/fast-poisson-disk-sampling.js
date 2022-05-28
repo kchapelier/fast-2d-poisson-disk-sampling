@@ -33,8 +33,9 @@ function FastPoissonDiskSampling (options, rng) {
 
     this.rng = rng || Math.random;
 
-    const epsilonRadius = 1e-14 * Math.max(1, Math.log2(Math.max(this.width, this.height)) - 5) | 0;
-    const epsilonAngle = 1e-14;
+    const floatPrecisionMitigation = Math.max(1, Math.max(this.width, this.height) / 64 | 0);
+    const epsilonRadius = 1e-14 * floatPrecisionMitigation;
+    const epsilonAngle = 2e-14;
 
     this.squaredRadius = this.radius * this.radius;
     this.radiusPlusEpsilon = this.radius + epsilonRadius;

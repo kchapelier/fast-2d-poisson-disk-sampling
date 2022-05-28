@@ -43,20 +43,23 @@ console.log('Fast 2D Poisson Disc Sampling benchmark');
 
 console.log();
 
-benchmark(800, 8, 15, 10);
-benchmark(800, 8, 30, 10);
-benchmark(800, 8, 60, 10);
+benchmark(1024, 8, 4, 10);
+benchmark(1024, 8, 15, 10);
+benchmark(1024, 8, 30, 10);
+benchmark(1024, 8, 60, 10);
 
 console.log();
 
-benchmark(800, 4, 15, 10);
-benchmark(800, 4, 30, 10);
-benchmark(800, 4, 60, 10);
+benchmark(1024, 4, 4, 10);
+benchmark(1024, 4, 15, 8);
+benchmark(1024, 4, 30, 8);
+benchmark(1024, 4, 60, 8);
 
 console.log();
 
-benchmark(800, 2, 15, 10);
-benchmark(800, 2, 30, 10);
-benchmark(800, 2, 60, 10);
+benchmark(1024, 2, 4, 10);
+benchmark(1024, 2, 15, 6);
+benchmark(1024, 2, 30, 6);
+benchmark(1024, 2, 60, 6);
 
 console.log();
